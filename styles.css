@@ -33,3 +33,33 @@ body {
 .choices > button {
     padding: 10px 20px;
 }
+
+.gameboard {
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(3, 50px);
+}
+
+.space {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle.center {
+    border: 1px solid black;
+}
+
+.middle.left, .middle.right{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.top.center, .bottom.center{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.space:hover {
+    background-color: black;
+}
