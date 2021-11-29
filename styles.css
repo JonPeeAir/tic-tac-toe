@@ -30,8 +30,27 @@ body {
     gap: 1rem;
 }
 
+.choices {
+    display: flex;
+    gap: 0.5rem;
+}
+
 .choices > button {
     padding: 10px 20px;
+}
+
+.player-prompts {
+    display: flex;
+    gap: 1rem;
+}
+
+.player-prompts > label {
+    text-align: center;
+}
+
+.nav-btns {
+    display: flex;
+    gap: 0.5rem;
 }
 
 .gameboard {
