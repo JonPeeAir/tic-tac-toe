@@ -1,4 +1,5 @@
-import { goBackToMainMenu } from "./script.js";
+import displayLocalGame from "./localGame.js";
+import { goBackToMainMenu, clearGameDisplay} from "./script.js";
 
 const gameDiv = document.querySelector(".game");
 
@@ -16,6 +17,7 @@ export default function displayPlayerPrompts() {
 
             const input = document.createElement("input");
             input.type = "text";
+            input.autocomplete = "off";
             input.id = `${toClassName(name)}`;
             input.name = `${toClassName(name)}`;
 
@@ -43,9 +45,19 @@ export default function displayPlayerPrompts() {
         }
 
         function createNextButton() {
+
+            function startLocalGame() {
+                const playerOneInput = document.getElementById("player-1");
+                const playerTwoInput = document.getElementById("player-2");
+
+                clearGameDisplay();
+                displayLocalGame(playerOneInput.value, playerTwoInput.value);
+            }
+
             const button = document.createElement("button");
             button.innerText = "Next";
             button.classList.add("next");
+            button.onclick = startLocalGame;
 
             return button;
         }
