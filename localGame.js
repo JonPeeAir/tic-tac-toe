@@ -4,19 +4,39 @@ const gameDiv = document.querySelector(".game");
 
 export default function displayLocalGame(player1, player2) {
 
+    if (player1 === "") player1 = "Player 1";
+    if (player2 === "") player2 = "Player 2";
+
+    const PlayerUtils = (function () {
+        let currentPlayer = player1;
+
+        function createCurrentPlayerText() {
+            const currentPlayerText = document.createElement("p");
+            currentPlayerText.id = "current-player";
+            currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
+
+            return currentPlayerText;
+        }
+
+        function switchCurrentPlayer() {
+            const currentPlayerText = document.getElementById("current-player");
+            currentPlayer = currentPlayer === player1 ? player2 : player1;
+            currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
+        }
+
+        return { createCurrentPlayerText, switchCurrentPlayer };
+    })();
+
     function createGameBoard() {
 
+        let currentSymbol = "X";
+
         function assignSymbol() {
-            if (!localStorage.getItem("current-move")) {
-                localStorage.setItem("current-move", "X");
-            }
-
             if (this.innerText === "") {
-                let currentMove = localStorage.getItem("current-move");
-                this.innerText = currentMove;
-                currentMove === "X" ? localStorage.setItem("current-move", "O") : localStorage.setItem("current-move", "X");
+                this.innerText = currentSymbol;
+                currentSymbol = currentSymbol === "X" ? "O" : "X";
+                PlayerUtils.switchCurrentPlayer();
             }
-
         }
 
         function generateSpace(parentBoard) {
@@ -24,12 +44,12 @@ export default function displayLocalGame(player1, player2) {
                 const space = document.createElement("div");
                 space.classList.add("space");
                 space.innerText = "";
+                space.style.cursor = "pointer";
+                space.onclick = assignSymbol;
 
                 let row = i < 4 ? "top" : i < 7 ? "middle" : "bottom";
                 let col = i % 3 === 0 ? "right" : i % 3 === 1 ? "left" : "center";
                 space.classList.add(row, col);
-
-                space.onclick = assignSymbol;
 
                 parentBoard.append(space);
             }
@@ -42,12 +62,17 @@ export default function displayLocalGame(player1, player2) {
         return gameBoard;
     }
 
-    const quitButton = document.createElement("button");
-    quitButton.innerText = "Quit";
-    quitButton.classList.add("quit");
-    quitButton.onclick = goBackToMainMenu;
+    function createQuitButton() {
+        const quitButton = document.createElement("button");
+        quitButton.innerText = "Quit";
+        quitButton.classList.add("quit");
+        quitButton.onclick = goBackToMainMenu;
 
-    gameDiv.innerText = player1 === "" ? "It's Player 1's turn" : `It's ${player1}'s turn`;
+        return quitButton;
+    }
+
+
+    gameDiv.append(PlayerUtils.createCurrentPlayerText());
     gameDiv.append(createGameBoard());
-    gameDiv.append(quitButton);
+    gameDiv.append(createQuitButton());
 }
