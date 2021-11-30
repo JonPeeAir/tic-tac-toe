@@ -23,5 +23,5 @@ function clearGameDisplay() {
     }
 }
 
-export { goBackToMainMenu, getPlayerNames };
+export { goBackToMainMenu, getPlayerNames, clearGameDisplay };
 
