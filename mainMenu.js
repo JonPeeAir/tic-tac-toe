@@ -2,7 +2,7 @@ import { getPlayerNames } from "./script.js";
 
 const gameDiv = document.querySelector(".game");
 
-function displayMainMenu() {
+export default function displayMainMenu() {
 
     function createGamemodeOptions() {
 
@@ -34,5 +34,3 @@ function displayMainMenu() {
     gameDiv.innerText = "Choose a gamemode"
     gameDiv.append(createGamemodeOptions());
 }
-
-export { displayMainMenu };

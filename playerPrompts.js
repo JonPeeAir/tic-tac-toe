@@ -2,7 +2,7 @@ import { goBackToMainMenu } from "./script.js";
 
 const gameDiv = document.querySelector(".game");
 
-function displayPlayerPrompts() {
+export default function displayPlayerPrompts() {
 
     function createPlayerPrompts() {
 
@@ -61,5 +61,3 @@ function displayPlayerPrompts() {
     gameDiv.append(createPlayerPrompts());
     gameDiv.append(createNavButtons());
 }
-
-export { displayPlayerPrompts };
