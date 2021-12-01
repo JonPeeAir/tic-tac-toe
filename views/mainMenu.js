@@ -1,4 +1,4 @@
-import { getPlayerNames } from "../script.js";
+import { getPlayerNames } from "../index.js";
 
 const gameDiv = document.querySelector(".game");
 

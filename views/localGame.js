@@ -1,4 +1,4 @@
-import { goBackToMainMenu } from "../script.js";
+import { goBackToMainMenu } from "../index.js";
 import gameUtils from "../gameUtils.js";
 
 export default (() => {

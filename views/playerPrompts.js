@@ -1,5 +1,5 @@
-import displayLocalGame from "./localGame.js";
-import { goBackToMainMenu, clearGameDisplay} from "../script.js";
+import localGame from "./localGame.js";
+import { goBackToMainMenu, clearGameDisplay} from "../index.js";
 
 const gameDiv = document.querySelector(".game");
 
@@ -47,11 +47,11 @@ export default function displayPlayerPrompts() {
         function createNextButton() {
 
             function startLocalGame() {
-                const playerOneInput = document.getElementById("player-1");
-                const playerTwoInput = document.getElementById("player-2");
+                const player1 = document.getElementById("player-1").value;
+                const player2 = document.getElementById("player-2").value;
 
                 clearGameDisplay();
-                displayLocalGame(playerOneInput.value, playerTwoInput.value);
+                localGame.display(player1, player2);
             }
 
             const button = document.createElement("button");
