@@ -1,27 +1,28 @@
 import displayPlayerPrompts from "./views/playerPrompts.js";
 import displayMainMenu from "./views/mainMenu.js";
 
-const gameDiv = document.querySelector(".game");
-const localGamemode = document.getElementById("local");
-const againstBotGamemode = document.getElementById("against-bot");
+export default (() => {
 
-localGamemode.addEventListener("click", getPlayerNames);
-
-function goBackToMainMenu() {
-    clearGameDisplay();
-    displayMainMenu();
-}
-
-function getPlayerNames() {
-    clearGameDisplay();
-    displayPlayerPrompts();
-}
-
-function clearGameDisplay() {
-    while (gameDiv.firstChild) {
-        gameDiv.removeChild(gameDiv.firstChild);
+    function goBackToMainMenu() {
+        clearGameDisplay();
+        displayMainMenu();
     }
-}
 
-export { goBackToMainMenu, getPlayerNames, clearGameDisplay };
+    function getPlayerNames() {
+        clearGameDisplay();
+        displayPlayerPrompts();
+    }
+
+    function clearGameDisplay() {
+        const gameDiv = document.querySelector(".game");
+        while (gameDiv.firstChild) {
+            gameDiv.removeChild(gameDiv.firstChild);
+        }
+    }
+
+    return { goBackToMainMenu, getPlayerNames, clearGameDisplay }
+
+})();
+
+displayMainMenu();
 
