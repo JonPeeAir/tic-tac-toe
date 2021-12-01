@@ -1,37 +1,49 @@
 import index from "../index.js";
 
-const gameDiv = document.querySelector(".game");
+export default (() => {
 
-export default function displayMainMenu() {
-
-    function createGamemodeOptions() {
-
-        function createLocalOption() {
-            const local = document.createElement("button");
-            local.innerText = "Local";
-            local.id = "local";
-            console.log(index.getPlayerNames);
-            local.onclick = index.getPlayerNames;
-
-            return local;
-        }
-        
-        function createAgainstBotOption() {
-            const againstBot = document.createElement("button");
-            againstBot.innerText = "Against Bot"
-            againstBot.id = "against-bot";
-
-            return againstBot;
-        }
-
-        const gamemodeOptions = document.createElement("div");
-        gamemodeOptions.classList.add("choices");
-        gamemodeOptions.append(createLocalOption());
-        gamemodeOptions.append(createAgainstBotOption());
-
-        return gamemodeOptions;
+    function display() {
+        const gameDiv = document.querySelector(".game");
+        gameDiv.innerText = "Choose a gamemode"
+        gameDiv.append(GameModes.create());
     }
 
-    gameDiv.innerText = "Choose a gamemode"
-    gameDiv.append(createGamemodeOptions());
-}
+    const GameModes = (() => {
+
+        function create() {
+            const gamemodeOptions = document.createElement("div");
+            gamemodeOptions.classList.add("choices");
+            gamemodeOptions.append(LocalMode.create());
+            gamemodeOptions.append(AgainstBotMode.create());
+
+            return gamemodeOptions;
+        }
+
+        const LocalMode = (() => {
+            function create() {
+                const local = document.createElement("button");
+                local.innerText = "Local";
+                local.id = "local";
+                local.onclick = index.getPlayerNames;
+
+                return local;
+            }
+            return { create };
+        })();
+
+        const AgainstBotMode = (() => {
+            function create() {
+                const againstBot = document.createElement("button");
+                againstBot.innerText = "Against Bot"
+                againstBot.id = "against-bot";
+
+                return againstBot;
+            }
+            return { create };
+        })();
+
+        return { create };
+    })();
+
+    return { display };
+})();
