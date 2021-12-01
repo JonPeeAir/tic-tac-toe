@@ -1,3 +1,5 @@
+import localGame from "./views/localGame.js";
+
 export default (() => {
 
     let winner = null;
@@ -55,7 +57,7 @@ export default (() => {
     }
 
     function setWinner() {
-        // rip idk how we gonna set winner
+        winner = localGame.PlayerUtils.getCurrentPlayer();
     }
 
     return { gameEnded, getWinner }
