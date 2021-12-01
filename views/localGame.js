@@ -1,4 +1,4 @@
-import { goBackToMainMenu } from "../index.js";
+import index from "../index.js";
 import gameUtils from "../gameUtils.js";
 
 export default (() => {
@@ -89,7 +89,7 @@ export default (() => {
             const quitButton = document.createElement("button");
             quitButton.innerText = "Quit";
             quitButton.classList.add("quit");
-            quitButton.onclick = goBackToMainMenu;
+            quitButton.onclick = index.goBackToMainMenu;
 
             return quitButton;
         }

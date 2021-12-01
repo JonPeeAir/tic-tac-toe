@@ -1,4 +1,4 @@
-import { getPlayerNames } from "../index.js";
+import index from "../index.js";
 
 const gameDiv = document.querySelector(".game");
 
@@ -10,7 +10,8 @@ export default function displayMainMenu() {
             const local = document.createElement("button");
             local.innerText = "Local";
             local.id = "local";
-            local.onclick = getPlayerNames;
+            console.log(index.getPlayerNames);
+            local.onclick = index.getPlayerNames;
 
             return local;
         }

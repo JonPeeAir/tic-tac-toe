@@ -1,5 +1,5 @@
 import localGame from "./localGame.js";
-import { goBackToMainMenu, clearGameDisplay} from "../index.js";
+import index from "../index.js";
 
 const gameDiv = document.querySelector(".game");
 
@@ -39,7 +39,7 @@ export default function displayPlayerPrompts() {
             const back = document.createElement("button");
             back.innerText = "Back";
             back.classList.add("back");
-            back.onclick = goBackToMainMenu;
+            back.onclick = index.goBackToMainMenu;
 
             return back;
         }
@@ -50,7 +50,7 @@ export default function displayPlayerPrompts() {
                 const player1 = document.getElementById("player-1").value;
                 const player2 = document.getElementById("player-2").value;
 
-                clearGameDisplay();
+                index.clearGameDisplay();
                 localGame.display(player1, player2);
             }
 
