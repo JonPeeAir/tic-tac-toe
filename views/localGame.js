@@ -1,4 +1,4 @@
-import { goBackToMainMenu } from "./script.js";
+import { goBackToMainMenu } from "../script.js";
 
 const gameDiv = document.querySelector(".game");
 

@@ -1,5 +1,5 @@
 import displayLocalGame from "./localGame.js";
-import { goBackToMainMenu, clearGameDisplay} from "./script.js";
+import { goBackToMainMenu, clearGameDisplay} from "../script.js";
 
 const gameDiv = document.querySelector(".game");
 
