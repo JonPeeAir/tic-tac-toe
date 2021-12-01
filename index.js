@@ -1,16 +1,16 @@
-import displayPlayerPrompts from "./views/playerPrompts.js";
-import displayMainMenu from "./views/mainMenu.js";
+import PlayerPrompts from "./views/playerPrompts.js";
+import MainMenu from "./views/mainMenu.js";
 
 export default (() => {
 
     function goBackToMainMenu() {
         clearGameDisplay();
-        displayMainMenu();
+        MainMenu.display();
     }
 
     function getPlayerNames() {
         clearGameDisplay();
-        displayPlayerPrompts();
+        PlayerPrompts.display();
     }
 
     function clearGameDisplay() {
@@ -24,5 +24,5 @@ export default (() => {
 
 })();
 
-displayMainMenu();
+MainMenu.display();
 
