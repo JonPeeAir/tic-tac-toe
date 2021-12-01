@@ -1,5 +1,5 @@
 import index from "../index.js";
-import gameUtils from "../gameUtils.js";
+import gameUtils from "../utils/gameUtils.js";
 
 export default (() => {
     let player1, player2;
