@@ -20,6 +20,10 @@ export default (() => {
     const PlayerUtils = (() => {
         let currentPlayer;
 
+        function getCurrentPlayer() {
+            return currentPlayer;
+        }
+
         function createCurrentPlayerText() {
             currentPlayer = player1;
 
@@ -36,7 +40,7 @@ export default (() => {
             currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
         }
 
-        return { createCurrentPlayerText, switchCurrentPlayer };
+        return { getCurrentPlayer, createCurrentPlayerText, switchCurrentPlayer };
     })();
 
     const GameBoard = (() => {
@@ -47,7 +51,7 @@ export default (() => {
                 this.innerText = currentSymbol;
                 if (gameUtils.gameEnded()) {
                     const winner = gameUtils.getWinner();
-                    console.log(winner);
+                    console.log({winner});
                 } else {
                     currentSymbol = currentSymbol === "X" ? "O" : "X";
                     PlayerUtils.switchCurrentPlayer();
