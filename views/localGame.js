@@ -1,4 +1,5 @@
 import { goBackToMainMenu } from "../script.js";
+import gameUtils from "../gameUtils.js";
 
 const gameDiv = document.querySelector(".game");
 
@@ -31,27 +32,33 @@ export default function displayLocalGame(player1, player2) {
 
         let currentSymbol = "X";
 
-        function assignSymbol() {
-            if (this.innerText === "") {
-                this.innerText = currentSymbol;
-                currentSymbol = currentSymbol === "X" ? "O" : "X";
-                PlayerUtils.switchCurrentPlayer();
-            }
-        }
-
         function generateSpace(parentBoard) {
             for (let i = 1; i <= 9; i++) {
                 const space = document.createElement("div");
+                space.id = i;
                 space.classList.add("space");
                 space.innerText = "";
                 space.style.cursor = "pointer";
-                space.onclick = assignSymbol;
+                space.onclick = assignSymbolAndCheckGame;
 
                 let row = i < 4 ? "top" : i < 7 ? "middle" : "bottom";
                 let col = i % 3 === 0 ? "right" : i % 3 === 1 ? "left" : "center";
                 space.classList.add(row, col);
 
                 parentBoard.append(space);
+            }
+        }
+
+        function assignSymbolAndCheckGame() {
+            if (this.innerText === "") {
+                this.innerText = currentSymbol;
+                if (gameUtils.gameEnded()) {
+                    const winner = gameUtils.getWinner();
+                    console.log(winner);
+                } else {
+                    currentSymbol = currentSymbol === "X" ? "O" : "X";
+                    PlayerUtils.switchCurrentPlayer();
+                }
             }
         }
 
