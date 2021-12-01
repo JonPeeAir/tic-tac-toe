@@ -1,5 +1,5 @@
-import displayPlayerPrompts from "./playerPrompts.js";
-import displayMainMenu from "./mainMenu.js";
+import displayPlayerPrompts from "./views/playerPrompts.js";
+import displayMainMenu from "./views/mainMenu.js";
 
 const gameDiv = document.querySelector(".game");
 const localGamemode = document.getElementById("local");
