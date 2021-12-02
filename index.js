@@ -1,5 +1,6 @@
 import PlayerPrompts from "./views/playerPrompts.js";
 import MainMenu from "./views/mainMenu.js";
+import GameResults from "./views/gameResults.js";
 
 export default (() => {
 
@@ -20,39 +21,10 @@ export default (() => {
         }
     }
 
-    const GameResults = (() => {
-        function display(winner) {
-            const gameResults = document.querySelector(".game-results");
-            for (let child of gameResults.children) {
-                child.classList.add("active");
-            }
-
-            console.log(winner);
-
-            if (winner) {
-                showWinnerDialog(winner);
-            } else {
-                showTieDialog();
-            }
-        }
-
-        function showWinnerDialog(winner) {
-            const resultText = document.querySelector(".result-text");
-            resultText.textContent = `${winner} wins`
-        }
-
-        function showTieDialog() {
-            const resultText = document.querySelector(".result-text");
-            resultText.textContent = "It's a Tie"
-        }
-
-        return { display };
-    })();
-
-
-    return { goBackToMainMenu, getPlayerNames, clearGameDisplay, GameResults }
+    return { goBackToMainMenu, getPlayerNames, clearGameDisplay }
 
 })();
 
 MainMenu.display();
+GameResults.setup();
 
