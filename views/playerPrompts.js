@@ -7,6 +7,14 @@ export default (() => {
         const gameDiv = document.querySelector(".game");
         gameDiv.append(PlayerPrompts.create());
         gameDiv.append(NavButtons.create());
+
+        document.addEventListener("keydown", function startLocalGameWithEnterKey(event) {
+            if(event.key === "Enter") {
+                console.log("Enter key was pressed");
+                NavButtons.NextButton.startLocalGame();
+                document.removeEventListener("keydown", startLocalGameWithEnterKey);
+            }
+        });
     }
 
     const PlayerPrompts = (() => {
@@ -82,10 +90,10 @@ export default (() => {
                 LocalGame.display(player1, player2);
             }
 
-            return { create };
+            return { create, startLocalGame };
         })();
 
-        return { create };
+        return { create, NextButton};
     })();
 
     // These are the only usable methods and properties outside this file
