@@ -54,5 +54,6 @@ export default (() => {
     }
 
 
+    // These are the only usable methods and properties outside this file
     return { display, setup };
 })();

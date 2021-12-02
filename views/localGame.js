@@ -124,6 +124,6 @@ export default (() => {
         return { create };
     })();
 
-    // These are the only usable properties and methods outside this file
+    // These are the only usable methods and properties outside this file
     return { display, resetGame, PlayerUtils }
 })();

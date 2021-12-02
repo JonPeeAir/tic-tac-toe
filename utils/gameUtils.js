@@ -60,7 +60,7 @@ export default (() => {
         winner = LocalGame.PlayerUtils.getCurrentPlayer();
     }
 
+    // These are the only usable methods and properties outside this file
     return { gameEnded, getWinner }
-
 })();
 
