@@ -1,4 +1,6 @@
 import Index from "../index.js";
+import MainMenu from "./mainMenu.js";
+import LocalGame from "./localGame.js";
 
 export default (() => {
 
@@ -13,6 +15,25 @@ export default (() => {
         } else {
             showTieDialog();
         }
+    }
+
+    function setup() {
+        const mainMenuBtn = document.querySelector(".main-menu");
+        mainMenuBtn.onclick = goBackToMainMenu;
+
+        const playAgainBtn = document.querySelector(".play-again");
+        playAgainBtn.onclick = playAgain;
+    }
+
+    function goBackToMainMenu() {
+        removeDisplay();
+        Index.clearGameDisplay();
+        MainMenu.display();
+    }
+
+    function playAgain() {
+        removeDisplay();
+        LocalGame.resetGame();
     }
 
     function removeDisplay() {
@@ -32,13 +53,6 @@ export default (() => {
         resultText.textContent = "It's a Tie"
     }
 
-    function setup() {
-        const mainMenuBtn = document.querySelector(".main-menu");
-        mainMenuBtn.onclick = Index.goBackToMainMenu;
-
-        const playAgainBtn = document.querySelector(".play-again");
-        playAgainBtn.onclick = removeDisplay;
-    }
 
     return { display, setup };
 })();
