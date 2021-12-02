@@ -53,7 +53,7 @@ export default (() => {
                 if (gameUtils.gameEnded()) {
                     disableSpaces();
                     const winner = gameUtils.getWinner();
-                    console.log({winner});
+                    index.GameResults.display(winner);
                 } else {
                     currentSymbol = currentSymbol === "X" ? "O" : "X";
                     PlayerUtils.switchCurrentPlayer();
