@@ -1,4 +1,5 @@
 import Index from "../index.js";
+import PlayerPrompts from "./playerPrompts.js"
 
 export default (() => {
 
@@ -24,10 +25,16 @@ export default (() => {
                 const local = document.createElement("button");
                 local.innerText = "Local";
                 local.id = "local";
-                local.onclick = Index.getPlayerNames;
+                local.onclick = getPlayerNames;
 
                 return local;
             }
+
+            function getPlayerNames() {
+                Index.clearGameDisplay();
+                PlayerPrompts.display();
+            }
+
             return { create };
         })();
 
