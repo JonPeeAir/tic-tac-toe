@@ -1,3 +1,5 @@
+import UnderConstruction from "./underConstruction.js";
+
 import Index from "../index.js";
 import PlayerPrompts from "./playerPrompts.js"
 
@@ -43,9 +45,16 @@ export default (() => {
                 const againstBot = document.createElement("button");
                 againstBot.innerText = "Against Bot"
                 againstBot.id = "against-bot";
+                againstBot.onclick = displayUnderConstruction;
 
                 return againstBot;
             }
+
+            function displayUnderConstruction() {
+                Index.clearGameDisplay();
+                UnderConstruction.display();
+            }
+
             return { create };
         })();
 
