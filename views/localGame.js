@@ -1,5 +1,6 @@
 import GameResults from "./gameResults.js";
 import GameUtils from "../utils/gameUtils.js";
+import Index from "../index.js"
 
 export default (() => {
     let player1, player2;
@@ -17,11 +18,22 @@ export default (() => {
         gameDiv.append(QuitButton.create());
     }
 
+    function resetGame() {
+        Index.clearGameDisplay();
+        const winner = PlayerUtils.getCurrentPlayer();
+        const loser = PlayerUtils.getPreviousPlayer();
+        display(loser, winner);
+    }
+
     const PlayerUtils = (() => {
         let currentPlayer;
 
         function getCurrentPlayer() {
             return currentPlayer;
+        }
+
+        function getPreviousPlayer() {
+            return currentPlayer === player1 ? player2 : player1;
         }
 
         function createCurrentPlayerText() {
@@ -40,7 +52,7 @@ export default (() => {
             currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
         }
 
-        return { getCurrentPlayer, createCurrentPlayerText, switchCurrentPlayer };
+        return { getCurrentPlayer, getPreviousPlayer, createCurrentPlayerText, switchCurrentPlayer };
     })();
 
     const GameBoard = (() => {
@@ -86,6 +98,8 @@ export default (() => {
         }
 
         function create() {
+            currentSymbol = "X";
+
             const gameBoard = document.createElement("div");
             gameBoard.classList.add("gameboard");
             generateSpaces(gameBoard);
@@ -102,7 +116,7 @@ export default (() => {
             const quitButton = document.createElement("button");
             quitButton.innerText = "Quit";
             quitButton.classList.add("quit");
-            quitButton.onclick = index.goBackToMainMenu;
+            quitButton.onclick = Index.goBackToMainMenu;
 
             return quitButton;
         }
@@ -111,5 +125,5 @@ export default (() => {
     })();
 
     // These are the only usable properties and methods outside this file
-    return { display, PlayerUtils }
+    return { display, resetGame, PlayerUtils }
 })();
