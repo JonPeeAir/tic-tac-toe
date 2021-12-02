@@ -20,7 +20,7 @@ export default (() => {
 
         function createDogeImage() {
             const image = document.createElement("img");
-            image.src = "../images/doge-under-construction.jpg";
+            image.src = "images/doge-under-construction.jpg";
             image.alt = "dog with a construction hat";
             image.width = "200";
 
