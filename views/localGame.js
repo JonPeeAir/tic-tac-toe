@@ -44,12 +44,14 @@ export default (() => {
     })();
 
     const GameBoard = (() => {
+        const NUM_OF_SPACES = 9;
         let currentSymbol = "X";
 
         function assignSymbolAndCheckGame() {
             if (this.innerText === "") {
                 this.innerText = currentSymbol;
                 if (gameUtils.gameEnded()) {
+                    disableSpaces();
                     const winner = gameUtils.getWinner();
                     console.log({winner});
                 } else {
@@ -59,8 +61,8 @@ export default (() => {
             }
         }
 
-        function generateSpace(parentBoard) {
-            for (let i = 1; i <= 9; i++) {
+        function generateSpaces(parentBoard) {
+            for (let i = 1; i <= NUM_OF_SPACES; i++) {
                 const space = document.createElement("div");
                 space.id = i;
                 space.classList.add("space");
@@ -76,10 +78,17 @@ export default (() => {
             }
         }
 
+        function disableSpaces() {
+            const spaces = document.getElementsByClassName("space");
+            for (let space of spaces) {
+                space.style.pointerEvents = "none";
+            }
+        }
+
         function create() {
             const gameBoard = document.createElement("div");
             gameBoard.classList.add("gameboard");
-            generateSpace(gameBoard);
+            generateSpaces(gameBoard);
 
             return gameBoard;
         }
