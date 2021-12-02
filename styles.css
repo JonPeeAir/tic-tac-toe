@@ -104,52 +104,60 @@ body {
     background-color: rgba(0, 0, 0, 0.5); 
     opacity: 0;
     
-    transition: opacity 1.75s;
-}
-
-.game-overlay.active {
-    opacity: 1;
-    z-index: 10;
 }
 
 .result-text {
-    width: 25vw;
-    height: 20vh;
+    padding: 1.5rem 4rem;
     font-size: 2.5rem;
     background-color: white;
     border: 2px solid black;
+    cursor: default;
     transform: scale(0);
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    transition: transform 0.5s;
-    transition-delay: 1.75s;
-}
-
-.result-text.active {
-    transform: scale(1);
-    z-index: 20;
 }
 
 .end-buttons {
-    visibility: hidden;
+    pointer-events: none;
     opacity: 0;
 
     display: flex;
     gap: 1rem;
-
-    transition: opacity 0.5s;
-    transition-delay: 3s;
 }
 
 .end-buttons > button {
     padding: 0.5rem;
 }
 
+
+@keyframes overlay-animation {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes text-animation {
+    0% { transform: scale(0); }
+    100% { transform: scale(1) }
+}
+
+@keyframes buttons-animation {
+    0% { opacity: 0; }
+    100% { opacity: 1; pointer-events: all; }
+}
+
+.game-overlay.active {
+    animation: overlay-animation 1.75s forwards;
+    z-index: 10;
+}
+
+.result-text.active {
+    animation: text-animation 0.5s 1.75s forwards;
+    z-index: 20;
+}
+
 .end-buttons.active {
-    visibility: visible;
-    opacity: 1;
+    animation: buttons-animation 0.5s 3s forwards;
     z-index: 20;
 }
