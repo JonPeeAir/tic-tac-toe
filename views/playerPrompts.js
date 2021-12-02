@@ -1,5 +1,5 @@
-import localGame from "./localGame.js";
-import index from "../index.js";
+import LocalGame from "./localGame.js";
+import Index from "../index.js";
 
 export default (() => {
 
@@ -56,7 +56,7 @@ export default (() => {
                 const back = document.createElement("button");
                 back.innerText = "Back";
                 back.classList.add("back");
-                back.onclick = index.goBackToMainMenu;
+                back.onclick = Index.goBackToMainMenu;
 
                 return back;
             }
@@ -78,8 +78,8 @@ export default (() => {
                 const player1 = document.getElementById("player-1").value;
                 const player2 = document.getElementById("player-2").value;
 
-                index.clearGameDisplay();
-                localGame.display(player1, player2);
+                Index.clearGameDisplay();
+                LocalGame.display(player1, player2);
             }
 
             return { create };

@@ -1,4 +1,4 @@
-import index from "../index.js";
+import Index from "../index.js";
 
 export default (() => {
 
@@ -24,7 +24,7 @@ export default (() => {
                 const local = document.createElement("button");
                 local.innerText = "Local";
                 local.id = "local";
-                local.onclick = index.getPlayerNames;
+                local.onclick = Index.getPlayerNames;
 
                 return local;
             }

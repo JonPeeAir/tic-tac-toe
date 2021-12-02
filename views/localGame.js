@@ -1,5 +1,5 @@
-import index from "../index.js";
-import gameUtils from "../utils/gameUtils.js";
+import GameResults from "./gameResults.js";
+import GameUtils from "../utils/gameUtils.js";
 
 export default (() => {
     let player1, player2;
@@ -50,10 +50,10 @@ export default (() => {
         function assignSymbolAndCheckGame() {
             if (this.innerText === "") {
                 this.innerText = currentSymbol;
-                if (gameUtils.gameEnded()) {
+                if (GameUtils.gameEnded()) {
                     disableSpaces();
-                    const winner = gameUtils.getWinner();
-                    index.GameResults.display(winner);
+                    const winner = GameUtils.getWinner();
+                    GameResults.display(winner);
                 } else {
                     currentSymbol = currentSymbol === "X" ? "O" : "X";
                     PlayerUtils.switchCurrentPlayer();
