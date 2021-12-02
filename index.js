@@ -1,4 +1,3 @@
-import PlayerPrompts from "./views/playerPrompts.js";
 import MainMenu from "./views/mainMenu.js";
 import GameResults from "./views/gameResults.js";
 
@@ -9,11 +8,6 @@ export default (() => {
         MainMenu.display();
     }
 
-    function getPlayerNames() {
-        clearGameDisplay();
-        PlayerPrompts.display();
-    }
-
     function clearGameDisplay() {
         const gameDiv = document.querySelector(".game");
         while (gameDiv.firstChild) {
@@ -22,7 +16,7 @@ export default (() => {
     }
 
     // These are the only usable methods and properties outside this file
-    return { goBackToMainMenu, getPlayerNames, clearGameDisplay }
+    return { goBackToMainMenu, clearGameDisplay }
 })();
 
 MainMenu.display();
