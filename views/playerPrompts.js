@@ -1,4 +1,4 @@
-import LocalGame from "./localGame.js";
+import Game from "./game.js";
 import Index from "../index.js";
 
 export default (() => {
@@ -87,7 +87,7 @@ export default (() => {
                 const player2 = document.getElementById("player-2").value;
 
                 Index.clearGameDisplay();
-                LocalGame.display(player1, player2);
+                Game.display(player1, player2);
             }
 
             return { create, startLocalGame };

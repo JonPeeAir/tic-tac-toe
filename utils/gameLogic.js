@@ -1,4 +1,4 @@
-import LocalGame from "../views/localGame.js";
+import Game from "../views/game.js";
 
 export default (() => {
 
@@ -57,7 +57,7 @@ export default (() => {
     }
 
     function setWinner() {
-        winner = LocalGame.PlayerUtils.getCurrentPlayer();
+        winner = Game.PlayerUtils.getCurrentPlayer();
     }
 
     // These are the only usable methods and properties outside this file

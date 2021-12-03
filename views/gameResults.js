@@ -1,6 +1,6 @@
 import Index from "../index.js";
 import MainMenu from "./mainMenu.js";
-import LocalGame from "./localGame.js";
+import Game from "./game.js";
 
 export default (() => {
 
@@ -33,7 +33,7 @@ export default (() => {
 
     function playAgain() {
         removeDisplay();
-        LocalGame.resetGame();
+        Game.resetGame();
     }
 
     function removeDisplay() {
