@@ -1,4 +1,4 @@
-import UnderConstruction from "./underConstruction.js";
+import Difficulty from "./difficulty.js";
 
 import Index from "../index.js";
 import PlayerPrompts from "./playerPrompts.js"
@@ -45,14 +45,14 @@ export default (() => {
                 const againstBot = document.createElement("button");
                 againstBot.innerText = "Against Bot"
                 againstBot.id = "against-bot";
-                againstBot.onclick = displayUnderConstruction;
+                againstBot.onclick = chooseDifficulty;
 
                 return againstBot;
             }
 
-            function displayUnderConstruction() {
+            function chooseDifficulty() {
                 Index.clearGameDisplay();
-                UnderConstruction.display();
+                Difficulty.display();
             }
 
             return { create };
