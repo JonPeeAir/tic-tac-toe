@@ -1,5 +1,5 @@
 import GameResults from "./gameResults.js";
-import GameLogic from "../utils/gameUtils.js";
+import GameLogic from "../utils/gameLogic.js";
 import Index from "../index.js"
 
 export default (() => {
@@ -53,12 +53,28 @@ export default (() => {
             currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
         }
 
-        return { getCurrentPlayer, getPreviousPlayer, createCurrentPlayerText, switchCurrentPlayer };
+        return { 
+            getCurrentPlayer, 
+            getPreviousPlayer, 
+            createCurrentPlayerText, 
+            switchCurrentPlayer 
+        };
+
     })();
 
     const GameBoard = (() => {
         const NUM_OF_SPACES = 9;
-        let currentSymbol = "X";
+        let currentSymbol;
+
+        function create() {
+            currentSymbol = "X";
+
+            const gameBoard = document.createElement("div");
+            gameBoard.classList.add("gameboard");
+            generateSpaces(gameBoard);
+
+            return gameBoard;
+        }
 
         function assignSymbolAndCheckGame() {
             if (this.innerText === "") {
@@ -74,6 +90,14 @@ export default (() => {
             }
         }
 
+        function getCurrentSymbol() {
+            return currentSymbol;
+        }
+
+        function switchCurrentSymbol() {
+            currentSymbol = currentSymbol === "X" ? "O" : "X";
+        }
+
         function generateSpaces(parentBoard) {
             for (let i = 1; i <= NUM_OF_SPACES; i++) {
                 const space = document.createElement("div");
@@ -84,15 +108,20 @@ export default (() => {
 
                 switch(game) {
                     case "local":
-
+                        space.onclick = LocalGame.behavior;
+                        break;
                     case "easy":
+                        space.onclick = BotGame.easyMode;
+                        break;
                     case "normal":
+                        space.onclick = BotGame.normalMode;
+                        break;
                     case "jeff":
+                        space.onclick = BotGame.hardMode;
+                        break;
                     default:
-
+                        space.onclick = LocalGame.behavior;
                 }
-
-                space.onclick = assignSymbolAndCheckGame;
 
                 let row = i < 4 ? "top" : i < 7 ? "middle" : "bottom";
                 let col = i % 3 === 0 ? "right" : i % 3 === 1 ? "left" : "center";
@@ -109,17 +138,14 @@ export default (() => {
             }
         }
 
-        function create() {
-            currentSymbol = "X";
 
-            const gameBoard = document.createElement("div");
-            gameBoard.classList.add("gameboard");
-            generateSpaces(gameBoard);
+        return { 
+            create, 
+            getCurrentSymbol, 
+            switchCurrentSymbol, 
+            disableSpaces 
+        };
 
-            return gameBoard;
-        }
-
-        return { create };
     })();
 
     const QuitButton = (() => {
@@ -137,5 +163,5 @@ export default (() => {
     })();
 
     // These are the only usable methods and properties outside this file
-    return { display, resetGame, PlayerUtils }
+    return { display, resetGame, PlayerUtils, GameBoard }
 })();
