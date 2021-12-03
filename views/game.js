@@ -1,13 +1,14 @@
 import GameResults from "./gameResults.js";
-import GameUtils from "../utils/gameUtils.js";
+import GameLogic from "../utils/gameUtils.js";
 import Index from "../index.js"
 
 export default (() => {
-    let player1, player2;
+    let player1, player2, game;
 
-    function display(p1, p2) {
+    function display(p1, p2, gameType) {
         player1 = p1;
         player2 = p2;
+        game = gameType;
 
         if (player1 === "") player1 = "Player 1";
         if (player2 === "") player2 = "Player 2";
@@ -62,9 +63,9 @@ export default (() => {
         function assignSymbolAndCheckGame() {
             if (this.innerText === "") {
                 this.innerText = currentSymbol;
-                if (GameUtils.gameEnded()) {
+                if (GameLogic.gameEnded()) {
                     disableSpaces();
-                    const winner = GameUtils.getWinner();
+                    const winner = GameLogic.getWinner();
                     GameResults.display(winner);
                 } else {
                     currentSymbol = currentSymbol === "X" ? "O" : "X";
@@ -80,6 +81,17 @@ export default (() => {
                 space.classList.add("space");
                 space.innerText = "";
                 space.style.cursor = "pointer";
+
+                switch(game) {
+                    case "local":
+
+                    case "easy":
+                    case "normal":
+                    case "jeff":
+                    default:
+
+                }
+
                 space.onclick = assignSymbolAndCheckGame;
 
                 let row = i < 4 ? "top" : i < 7 ? "middle" : "bottom";
