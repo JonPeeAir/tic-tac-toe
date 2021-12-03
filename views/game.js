@@ -1,6 +1,8 @@
+import Index from "../index.js"
 import GameResults from "./gameResults.js";
 import GameLogic from "../utils/gameLogic.js";
-import Index from "../index.js"
+import LocalGame from "../utils/localGame.js";
+import BotGame from "../utils/botGame.js";
 
 export default (() => {
     let player1, player2, game;
