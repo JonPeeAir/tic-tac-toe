@@ -85,6 +85,21 @@ body {
     background-color: rgba(0, 0, 0, 0.055);
 }
 
+.difficulty-options {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.difficulty-options > button {
+    width: 100px;
+    height: 35px;
+    font-size: 1.2rem;
+}
+
 .game-results {
     position: absolute;
     width: 100vw;
