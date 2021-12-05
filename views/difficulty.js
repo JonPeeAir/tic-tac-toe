@@ -24,7 +24,7 @@ export default (() => {
             difficultyOptions.classList.add("difficulty-options");
             difficultyOptions.append(EasyMode.create());
             difficultyOptions.append(NormalMode.create());
-            difficultyOptions.append(Jeff.create());
+            difficultyOptions.append(AgainstJeff.create());
             return difficultyOptions;
         }
 
@@ -58,7 +58,7 @@ export default (() => {
             return { create };
         })();
 
-        const Jeff = (() => {
+        const AgainstJeff = (() => {
 
             function create() {
                 const jeff = document.createElement("button");
