@@ -3,6 +3,7 @@ import GameResults from "./gameResults.js";
 import GameLogic from "../utils/gameLogic.js";
 import LocalGame from "../utils/localGame.js";
 import BotGame from "../utils/botGame.js";
+import BotUtils from "../utils/botUtils.js";
 
 export default (() => {
     let player1, player2, game;
@@ -19,13 +20,18 @@ export default (() => {
         gameDiv.append(PlayerUtils.createCurrentPlayerText());
         gameDiv.append(GameBoard.create());
         gameDiv.append(QuitButton.create());
+
+        if (game != "local" && PlayerUtils.getCurrentPlayer() != "Player") {
+            BotUtils.EasyBot.makeMove();
+        }
+    
     }
 
     function resetGame() {
         Index.clearGameDisplay();
         const winner = PlayerUtils.getCurrentPlayer();
         const loser = PlayerUtils.getPreviousPlayer();
-        display(loser, winner);
+        display(loser, winner, game);
     }
 
     const PlayerUtils = (() => {
@@ -74,6 +80,7 @@ export default (() => {
             const gameBoard = document.createElement("div");
             gameBoard.classList.add("gameboard");
             generateSpaces(gameBoard);
+
 
             return gameBoard;
         }
@@ -140,12 +147,20 @@ export default (() => {
             }
         }
 
+        function enableSpaces() {
+            const spaces = document.getElementsByClassName("space");
+            for (let space of spaces) {
+                space.style.pointerEvents = "all";
+            }
+        }
+
 
         return { 
             create, 
             getCurrentSymbol, 
             switchCurrentSymbol, 
-            disableSpaces 
+            disableSpaces,
+            enableSpaces 
         };
 
     })();

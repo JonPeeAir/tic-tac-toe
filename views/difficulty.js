@@ -1,4 +1,5 @@
 import Index from "../index.js";
+import Game from "./game.js";
 
 export default (() => {
 
@@ -33,7 +34,13 @@ export default (() => {
                 const easyMode = document.createElement("button");
                 easyMode.classList.add("easy");
                 easyMode.textContent = "Easy";
+                easyMode.onclick = startEasyBotGame;
                 return easyMode;
+            }
+
+            function startEasyBotGame() {
+                Index.clearGameDisplay();
+                Game.display("Player", "Baby Jeff", "easy");
             }
 
             return { create };
