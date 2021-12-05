@@ -83,16 +83,16 @@ export default (() => {
     })();
 
     const GameBoard = (() => {
-        const NUM_OF_SPACES = 9;
+        const NUM_OF_ROWS = 3;
+        const NUM_OF_COLUMNS = 3;
+        const NUM_OF_SPACES = NUM_OF_ROWS * NUM_OF_COLUMNS;
         let currentSymbol;
 
         function create() {
             currentSymbol = "X";
-
             const gameBoard = document.createElement("div");
             gameBoard.classList.add("gameboard");
             generateSpaces(gameBoard);
-
             return gameBoard;
         }
 
@@ -102,6 +102,19 @@ export default (() => {
 
         function switchCurrentSymbol() {
             currentSymbol = currentSymbol === "X" ? "O" : "X";
+        }
+
+        function extractSymbols() {
+            const spaces = Array.from(document.getElementsByClassName("space"));
+            const symbols = [];
+            for (let i = 0; i < NUM_OF_ROWS; i++) {
+                symbols.push([]);
+                for (let j = 0; j < NUM_OF_COLUMNS; j++) {
+                    symbols[i].push(spaces.shift());
+                }
+            }
+
+            return symbols;
         }
 
         function generateSpaces(parentBoard) {
@@ -151,11 +164,11 @@ export default (() => {
             }
         }
 
-
         return { 
             create, 
             getCurrentSymbol, 
             switchCurrentSymbol, 
+            extractSymbols,
             disableSpaces,
             enableSpaces 
         };
