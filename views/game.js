@@ -110,7 +110,8 @@ export default (() => {
             for (let i = 0; i < NUM_OF_ROWS; i++) {
                 symbols.push([]);
                 for (let j = 0; j < NUM_OF_COLUMNS; j++) {
-                    symbols[i].push(spaces.shift());
+                    let space = spaces.shift();
+                    symbols[i].push(space.innerText);
                 }
             }
 
