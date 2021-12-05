@@ -1,7 +1,6 @@
-import Difficulty from "./difficulty.js";
-
 import Index from "../index.js";
 import PlayerPrompts from "./playerPrompts.js"
+import DifficultySelect from "./difficultySelect.js";
 
 export default (() => {
 
@@ -52,7 +51,7 @@ export default (() => {
 
             function chooseDifficulty() {
                 Index.clearGameDisplay();
-                Difficulty.display();
+                DifficultySelect.display();
             }
 
             return { create };
