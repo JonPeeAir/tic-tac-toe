@@ -22,7 +22,7 @@ export default (() => {
         gameDiv.append(GameBoard.create());
         gameDiv.append(QuitButton.create());
 
-        const bot_has_to_make_first_move = game != "local" && PlayerUtils.getCurrentPlayer() != "Player";
+        const bot_has_to_make_first_move = game != "local" && PlayerUtils.getCurrentPlayerName() != "Player";
         if (bot_has_to_make_first_move) {
             switch (game) {
                 case "easy":
