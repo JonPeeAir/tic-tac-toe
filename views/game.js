@@ -6,6 +6,7 @@ import BotGame from "../utils/botGame.js";
 import BotUtils from "../utils/botUtils.js";
 
 export default (() => {
+
     let player1, player2, game;
 
     function display(p1, p2, gameType) {
@@ -21,8 +22,17 @@ export default (() => {
         gameDiv.append(GameBoard.create());
         gameDiv.append(QuitButton.create());
 
-        if (game != "local" && PlayerUtils.getCurrentPlayer() != "Player") {
-            BotUtils.EasyBot.makeMove();
+        const bot_has_to_make_first_move = game != "local" && PlayerUtils.getCurrentPlayer() != "Player";
+        if (bot_has_to_make_first_move) {
+            switch (game) {
+                case "easy":
+                    BotUtils.EasyBot.makeMove();
+                    break;
+                case "normal":
+                case "jeff":
+                default:
+                    return;
+            }
             PlayerUtils.switchCurrentPlayer();
             GameBoard.switchCurrentSymbol();
         }
@@ -83,22 +93,7 @@ export default (() => {
             gameBoard.classList.add("gameboard");
             generateSpaces(gameBoard);
 
-
             return gameBoard;
-        }
-
-        function assignSymbolAndCheckGame() {
-            if (this.innerText === "") {
-                this.innerText = currentSymbol;
-                if (GameLogic.gameEnded()) {
-                    disableSpaces();
-                    const winner = GameLogic.getWinner();
-                    GameResults.display(winner);
-                } else {
-                    currentSymbol = currentSymbol === "X" ? "O" : "X";
-                    PlayerUtils.switchCurrentPlayer();
-                }
-            }
         }
 
         function getCurrentSymbol() {
