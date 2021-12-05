@@ -8,34 +8,38 @@ export default (() => {
     function easyMode() {
 
         if (this.innerText === "") {
-
             this.innerText = Game.GameBoard.getCurrentSymbol();
-
             if (GameLogic.gameEnded()) {
-
                 Game.GameBoard.disableSpaces();
                 const winner = GameLogic.getWinner();
                 GameResults.display(winner);
-
             } else {
-
                 Game.GameBoard.switchCurrentSymbol();
                 Game.PlayerUtils.switchCurrentPlayer();
                 Game.GameBoard.disableSpaces();
-                
                 setTimeout(() => {
                     BotUtils.EasyBot.makeMove();
-                    Game.GameBoard.switchCurrentSymbol();
-                    Game.GameBoard.enableSpaces();
-                    Game.PlayerUtils.switchCurrentPlayer();
-                }, 2000);
-
-
+                    if (GameLogic.gameEnded()) {
+                        Game.GameBoard.disableSpaces();
+                        const winner = GameLogic.getWinner();
+                        GameResults.display(winner);
+                    } else {
+                        Game.GameBoard.switchCurrentSymbol();
+                        Game.GameBoard.enableSpaces();
+                        Game.PlayerUtils.switchCurrentPlayer();
+                    }
+                }, 1000);
             }
-
-
         }
 
+    }
+
+    function checkGameEnded() {
+        if (GameLogic.gameEnded()) {
+            Game.GameBoard.disableSpaces();
+            const winner = GameLogic.getWinner();
+            GameResults.display(winner);
+        }
     }
 
     function normalMode() {

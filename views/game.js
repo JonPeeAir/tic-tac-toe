@@ -23,6 +23,8 @@ export default (() => {
 
         if (game != "local" && PlayerUtils.getCurrentPlayer() != "Player") {
             BotUtils.EasyBot.makeMove();
+            PlayerUtils.switchCurrentPlayer();
+            GameBoard.switchCurrentSymbol();
         }
     
     }

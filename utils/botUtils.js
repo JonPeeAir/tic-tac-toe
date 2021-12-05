@@ -18,16 +18,12 @@ export default (() => {
 
     function doRandomMove() {
         const randomSpace = getRandomSpace();
-        console.log(randomSpace);
         randomSpace.innerText = Game.GameBoard.getCurrentSymbol();
     }
 
     function getRandomSpace() {
         const playableSpaces = getPossibleMoves();
         let randomIndex = Math.floor(Math.random() * playableSpaces.length);
-
-        console.log(playableSpaces);
-        console.log(randomIndex);
         return playableSpaces[randomIndex];
     }
 
