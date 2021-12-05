@@ -41,19 +41,19 @@ export default (() => {
 
     function resetGame() {
         Index.clearGameDisplay();
-        const winner = PlayerUtils.getCurrentPlayer();
-        const loser = PlayerUtils.getPreviousPlayer();
+        const winner = PlayerUtils.getCurrentPlayerName();
+        const loser = PlayerUtils.getPreviousPlayerName();
         display(loser, winner, game);
     }
 
     const PlayerUtils = (() => {
         let currentPlayer;
 
-        function getCurrentPlayer() {
+        function getCurrentPlayerName() {
             return currentPlayer;
         }
 
-        function getPreviousPlayer() {
+        function getPreviousPlayerName() {
             return currentPlayer === player1 ? player2 : player1;
         }
 
@@ -74,8 +74,8 @@ export default (() => {
         }
 
         return { 
-            getCurrentPlayer, 
-            getPreviousPlayer, 
+            getCurrentPlayerName, 
+            getPreviousPlayerName, 
             createCurrentPlayerText, 
             switchCurrentPlayer 
         };
