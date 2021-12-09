@@ -66,6 +66,11 @@ export default (() => {
 
 
     // These are the only usable methods and properties outside this file
-    return { gameEnded, getWinner, thereIsWinner }
+    return { 
+        gameEnded,
+        getWinner, 
+        thereIsWinner, 
+        thereIsSpace
+    }
 })();
 
