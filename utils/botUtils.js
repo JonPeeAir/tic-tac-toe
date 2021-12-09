@@ -16,10 +16,8 @@ export default (() => {
 
         function makeMove() {
             if (madeRandomMove) {
-                console.log("move is smart");
                 doSmartMove();
             } else {
-                console.log("move is random");
                 doRandomMove();
                 madeRandomMove = true;
             }
