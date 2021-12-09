@@ -14,7 +14,6 @@ export default (() => {
 
     function gameEnded() {
         const symbols = Game.GameBoard.getBoard(); 
-        console.log(symbols);
 
         if (thereIsWinner(symbols)) {
             setWinner();

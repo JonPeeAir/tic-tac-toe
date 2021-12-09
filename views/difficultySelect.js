@@ -52,7 +52,13 @@ export default (() => {
                 const normalMode = document.createElement("button");
                 normalMode.classList.add("normal");
                 normalMode.textContent = "Normal";
+                normalMode.onclick = startNormalBotGame;
                 return normalMode;
+            }
+
+            function startNormalBotGame() {
+                Index.clearGameDisplay();
+                Game.display("Player", "Teen Jeff", "normal");
             }
 
             return { create };
@@ -64,7 +70,13 @@ export default (() => {
                 const jeff = document.createElement("button");
                 jeff.classList.add("jeff");
                 jeff.textContent = "Jeff";
+                jeff.onclick = startHardBotGame;
                 return jeff;
+            }
+
+            function startHardBotGame() {
+                Index.clearGameDisplay();
+                Game.display("Player", "Jeff", "hard");
             }
 
             return { create };

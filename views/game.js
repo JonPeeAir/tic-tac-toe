@@ -29,7 +29,11 @@ export default (() => {
                     BotUtils.EasyBot.makeMove();
                     break;
                 case "normal":
-                case "jeff":
+                    BotUtils.NormalBot.makeMove();
+                    break;
+                case "hard":
+                    BotUtils.HardBot.makeMove();
+                    break;
                 default:
                     return;
             }
@@ -150,7 +154,7 @@ export default (() => {
                     case "normal":
                         space.onclick = BotGame.normalMode;
                         break;
-                    case "jeff":
+                    case "hard":
                         space.onclick = BotGame.hardMode;
                         break;
                     default:
