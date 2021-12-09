@@ -50,6 +50,7 @@ export default (() => {
         const winner = PlayerUtils.getCurrentPlayerName();
         const loser = PlayerUtils.getOtherPlayerName();
         GameUtils.resetWinner();
+        BotUtils.NormalBot.reset();
         display(loser, winner, game);
     }
 
