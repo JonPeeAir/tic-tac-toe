@@ -29,6 +29,7 @@ export default (() => {
                     BotUtils.EasyBot.makeMove();
                     break;
                 case "normal":
+                    BotUtils.NormalBot.reset();
                     BotUtils.NormalBot.makeMove();
                     break;
                 case "hard":

@@ -12,21 +12,24 @@ export default (() => {
     })();
 
     const NormalBot = (() => {
-        let madeSmartMove = false;
+        let madeRandomMove = false;
 
         function makeMove() {
-            if (madeSmartMove) {
-                console.log("move is random");
-                doRandomMove();
-                madeSmartMove = false;
-            } else {
+            if (madeRandomMove) {
                 console.log("move is smart");
                 doSmartMove();
-                madeSmartMove = true;
+            } else {
+                console.log("move is random");
+                doRandomMove();
+                madeRandomMove = true;
             }
         }
 
-        return { makeMove };
+        function reset() {
+            madeRandomMove = false;
+        }
+
+        return { makeMove, reset };
     })();
 
     const HardBot = (() => {
