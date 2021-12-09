@@ -12,6 +12,10 @@ export default (() => {
         winner = Game.PlayerUtils.getCurrentPlayerName();
     }
 
+    function resetWinner() {
+        winner = null;
+    }
+
     function gameEnded() {
         const symbols = Game.GameBoard.getBoard(); 
 
@@ -68,6 +72,7 @@ export default (() => {
     return { 
         gameEnded,
         getWinner, 
+        resetWinner,
         thereIsWinner, 
         thereIsSpace
     }

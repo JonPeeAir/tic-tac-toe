@@ -2,6 +2,7 @@ import Index from "../index.js"
 import LocalGame from "../utils/localGame.js";
 import BotGame from "../utils/botGame.js";
 import BotUtils from "../utils/botUtils.js";
+import GameUtils from "../utils/gameUtils.js";
 
 export default (() => {
 
@@ -48,6 +49,7 @@ export default (() => {
         Index.clearGameDisplay();
         const winner = PlayerUtils.getCurrentPlayerName();
         const loser = PlayerUtils.getOtherPlayerName();
+        GameUtils.resetWinner();
         display(loser, winner, game);
     }
 
