@@ -1,5 +1,5 @@
 import Game from "../views/game.js"
-import GameLogic from "./gameLogic.js"
+import GameUtils from "./gameUtils.js"
 import GameResults from "../views/gameResults.js"
 
 export default (() => {
@@ -7,9 +7,9 @@ export default (() => {
     function behavior() {
         if (this.innerText === "") {
             this.innerText = Game.GameBoard.getCurrentSymbol();
-            if (GameLogic.gameEnded()) {
+            if (GameUtils.gameEnded()) {
                 Game.GameBoard.disableSpaces();
-                const winner = GameLogic.getWinner();
+                const winner = GameUtils.getWinner();
                 GameResults.display(winner);
             } else {
                 Game.GameBoard.switchCurrentSymbol();

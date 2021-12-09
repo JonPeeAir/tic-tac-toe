@@ -1,6 +1,6 @@
 import Game from "../views/game.js"
 import GameResults from "../views/gameResults.js"
-import GameLogic from "./gameLogic.js"
+import GameUtils from "./gameUtils.js"
 import BotUtils from "./botUtils.js"
 
 export default (() => {
@@ -9,9 +9,9 @@ export default (() => {
 
         if (this.innerText === "") {
             this.innerText = Game.GameBoard.getCurrentSymbol();
-            if (GameLogic.gameEnded()) {
+            if (GameUtils.gameEnded()) {
                 Game.GameBoard.disableSpaces();
-                const winner = GameLogic.getWinner();
+                const winner = GameUtils.getWinner();
                 GameResults.display(winner);
             } else {
                 Game.GameBoard.switchCurrentSymbol();
@@ -19,9 +19,9 @@ export default (() => {
                 Game.GameBoard.disableSpaces();
                 setTimeout(() => {
                     BotUtils.EasyBot.makeMove();
-                    if (GameLogic.gameEnded()) {
+                    if (GameUtils.gameEnded()) {
                         Game.GameBoard.disableSpaces();
-                        const winner = GameLogic.getWinner();
+                        const winner = GameUtils.getWinner();
                         GameResults.display(winner);
                     } else {
                         Game.GameBoard.switchCurrentSymbol();
@@ -35,9 +35,9 @@ export default (() => {
     }
 
     function checkGameEnded() {
-        if (GameLogic.gameEnded()) {
+        if (GameUtils.gameEnded()) {
             Game.GameBoard.disableSpaces();
-            const winner = GameLogic.getWinner();
+            const winner = GameUtils.getWinner();
             GameResults.display(winner);
         }
     }

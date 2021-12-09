@@ -1,6 +1,4 @@
 import Index from "../index.js"
-import GameResults from "./gameResults.js";
-import GameLogic from "../utils/gameLogic.js";
 import LocalGame from "../utils/localGame.js";
 import BotGame from "../utils/botGame.js";
 import BotUtils from "../utils/botUtils.js";
