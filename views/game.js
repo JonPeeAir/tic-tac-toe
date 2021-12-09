@@ -183,7 +183,8 @@ export default (() => {
             create, 
             getCurrentSymbol, 
             switchCurrentSymbol, 
-            extractSymbols,
+            getBoard,
+            getHTMLBoard,
             disableSpaces,
             enableSpaces 
         };
