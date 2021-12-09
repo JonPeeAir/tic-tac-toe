@@ -4,9 +4,17 @@ export default (() => {
 
     let winner = null;
 
+    function getWinner() {
+        return winner;
+    }
+
+    function setWinner() {
+        winner = Game.PlayerUtils.getCurrentPlayerName();
+    }
+
     function gameEnded() {
-        const spaces = Array.from(document.getElementsByClassName("space"));
-        const symbols = spaces.map(space => space.innerText);
+        const symbols = Game.GameBoard.extractSymbols(); 
+        console.log(symbols);
 
         if (thereIsWinner(symbols)) {
             setWinner();
@@ -15,27 +23,29 @@ export default (() => {
         return thereIsWinner(symbols) || !thereIsSpace(symbols);
     }
 
-    function thereIsWinner(symbol) {
+    function thereIsWinner(symbols) {
 
         function winnerByRow() {
-            const topRowWin = symbol[0] === symbol[1] && symbol[0] === symbol[2] && symbol[0] != "";
-            const middleRowWin = symbol[3] === symbol[4] && symbol[3] === symbol[5] && symbol[3] != "";
-            const bottomRowWin = symbol[6] === symbol[7] && symbol[6] === symbol[8] && symbol[6] != "";
-
-            return topRowWin || middleRowWin || bottomRowWin;
+            for (let i = 0; i < symbols.length; i++) {
+                if (symbols[i][0] === symbols[i][1] && symbols[i][0] === symbols[i][2] && symbols[i][0] != "") {
+                    return true;
+                }
+            }
+            return false
         }
 
         function winnerByColumn() {
-            const leftColumnWin = symbol[0] === symbol[3] && symbol[0] === symbol[6] && symbol[0] != "";
-            const centerColumnWin = symbol[1] === symbol[4] && symbol[1] === symbol[7] && symbol[1] != "";
-            const rightColumnWin = symbol[2] === symbol[5] && symbol[2] === symbol[8] && symbol[2] != "";
-
-            return leftColumnWin || centerColumnWin || rightColumnWin;
+            for (let i = 0; i < symbols.length; i++) {
+                if (symbols[0][i] === symbols[1][i] && symbols[0][i] === symbols[2][i] && symbols[0][i] != "") {
+                    return true;
+                }
+            }
+            return false
         }
 
         function winnerByDiagonal() {
-            const topLeftToRightWin = symbol[0] === symbol[4] && symbol[0] === symbol[8] && symbol[0] != "";
-            const topRightToLeftWin= symbol[2] === symbol[4] && symbol[2] === symbol[6] && symbol[2] != "";
+            const topLeftToRightWin = symbols[0][0] === symbols[1][1] && symbols[0][0] === symbols[2][2] && symbols[0][0] != "";
+            const topRightToLeftWin= symbols[0][2] === symbols[1][1] && symbols[0][2] === symbols[2][0] && symbols[0][2] != "";
 
             return topLeftToRightWin || topRightToLeftWin;
         }
@@ -43,22 +53,17 @@ export default (() => {
         return winnerByRow() || winnerByColumn() || winnerByDiagonal();
     }
 
-    function thereIsSpace(symbol) {
-        for (let i = 0; i < symbol.length; i++) {
-            if (symbol[i] === "") {
-                return true;
+    function thereIsSpace(symbols) {
+        for (let i = 0; i < symbols.length; i++) {
+            for (let j = 0; j < symbols[i].length; j++) {
+                if (symbols[i][j] === "") {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    function getWinner() {
-        return winner;
-    }
-
-    function setWinner() {
-        winner = Game.PlayerUtils.getCurrentPlayer();
-    }
 
     // These are the only usable methods and properties outside this file
     return { gameEnded, getWinner }
