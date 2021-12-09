@@ -104,18 +104,32 @@ export default (() => {
             currentSymbol = currentSymbol === "X" ? "O" : "X";
         }
 
-        function extractSymbols() {
+        function getBoard() {
             const spaces = Array.from(document.getElementsByClassName("space"));
-            const symbols = [];
+            const board = [];
             for (let i = 0; i < NUM_OF_ROWS; i++) {
-                symbols.push([]);
+                board.push([]);
                 for (let j = 0; j < NUM_OF_COLUMNS; j++) {
                     let space = spaces.shift();
-                    symbols[i].push(space.innerText);
+                    board[i].push(space.innerText);
                 }
             }
 
-            return symbols;
+            return board;
+        }
+
+        function getHTMLBoard() {
+            const spaces = Array.from(document.getElementsByClassName("space"));
+            const htmlBoard = [];
+            for (let i = 0; i < NUM_OF_ROWS; i++) {
+                htmlBoard.push([]);
+                for (let j = 0; j < NUM_OF_COLUMNS; j++) {
+                    let space = spaces.shift();
+                    htmlBoard[i].push(space);
+                }
+            }
+
+            return htmlBoard;
         }
 
         function generateSpaces(parentBoard) {
