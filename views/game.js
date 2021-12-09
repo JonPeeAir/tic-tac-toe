@@ -7,15 +7,17 @@ import BotUtils from "../utils/botUtils.js";
 
 export default (() => {
 
-    let player1, player2, game;
+    let Player = {};
+    let game;
 
     function display(p1, p2, gameType) {
-        player1 = p1;
-        player2 = p2;
-        game = gameType;
+        Player["X"] = p1;
+        if (Player["X"] === "") Player["X"] = "Player 1";
 
-        if (player1 === "") player1 = "Player 1";
-        if (player2 === "") player2 = "Player 2";
+        Player["O"] = p2;
+        if (Player["O"] === "") Player["O"] = "Player 2";
+
+        game = gameType;
 
         const gameDiv = document.querySelector(".game");
         gameDiv.append(PlayerUtils.createCurrentPlayerText());
@@ -42,7 +44,7 @@ export default (() => {
     function resetGame() {
         Index.clearGameDisplay();
         const winner = PlayerUtils.getCurrentPlayerName();
-        const loser = PlayerUtils.getPreviousPlayerName();
+        const loser = PlayerUtils.getOtherPlayerName();
         display(loser, winner, game);
     }
 
@@ -53,12 +55,12 @@ export default (() => {
             return currentPlayer;
         }
 
-        function getPreviousPlayerName() {
-            return currentPlayer === player1 ? player2 : player1;
+        function getOtherPlayerName() {
+            return currentPlayer === Player["X"] ? Player["O"] : Player["X"];
         }
 
         function createCurrentPlayerText() {
-            currentPlayer = player1;
+            currentPlayer = Player["X"];
 
             const currentPlayerText = document.createElement("p");
             currentPlayerText.id = "current-player";
@@ -68,14 +70,14 @@ export default (() => {
         }
 
         function switchCurrentPlayer() {
+            currentPlayer = getOtherPlayerName();
             const currentPlayerText = document.getElementById("current-player");
-            currentPlayer = currentPlayer === player1 ? player2 : player1;
             currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
         }
 
         return { 
             getCurrentPlayerName, 
-            getPreviousPlayerName, 
+            getOtherPlayerName, 
             createCurrentPlayerText, 
             switchCurrentPlayer 
         };
@@ -191,5 +193,5 @@ export default (() => {
     })();
 
     // These are the only usable methods and properties outside this file
-    return { display, resetGame, PlayerUtils, GameBoard }
+    return { display, resetGame, PlayerUtils, GameBoard, Player }
 })();
