@@ -17,6 +17,7 @@ export default (() => {
         if (Player["O"] === "") Player["O"] = "Player 2";
 
         game = gameType;
+        GameUtils.resetWinner();
 
         const gameDiv = document.querySelector(".game");
         gameDiv.append(PlayerUtils.createCurrentPlayerText());
@@ -49,7 +50,6 @@ export default (() => {
         Index.clearGameDisplay();
         const winner = PlayerUtils.getCurrentPlayerName();
         const loser = PlayerUtils.getOtherPlayerName();
-        GameUtils.resetWinner();
         BotUtils.NormalBot.reset();
         display(loser, winner, game);
     }
