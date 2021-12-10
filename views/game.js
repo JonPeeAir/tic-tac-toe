@@ -7,26 +7,25 @@ import GameUtils from "../utils/gameUtils.js";
 export default (() => {
 
     let Player = {};
-    let game;
+    let gameMode;
 
-    function display(p1, p2, gameType) {
-        Player["X"] = p1;
+    function display(player1, player2, game) {
+        Player["X"] = player1;
+        Player["O"] = player2;
         if (Player["X"] === "") Player["X"] = "Player 1";
-
-        Player["O"] = p2;
         if (Player["O"] === "") Player["O"] = "Player 2";
 
-        game = gameType;
-        GameUtils.resetWinner();
+        gameMode = game;
 
+        BotUtils.NormalBot.reset();
         const gameDiv = document.querySelector(".game");
-        gameDiv.append(PlayerUtils.createCurrentPlayerText());
+        gameDiv.append(CurrentPlayerText.create());
         gameDiv.append(GameBoard.create());
         gameDiv.append(QuitButton.create());
 
-        const bot_has_to_make_first_move = game != "local" && PlayerUtils.getCurrentPlayerName() != "Player";
+        const bot_has_to_make_first_move = gameMode != "local" && Player["X"] != "Player";
         if (bot_has_to_make_first_move) {
-            switch (game) {
+            switch (gameMode) {
                 case "easy":
                     BotUtils.EasyBot.makeMove();
                     break;
@@ -40,53 +39,75 @@ export default (() => {
                 default:
                     return;
             }
-            PlayerUtils.switchCurrentPlayer();
-            GameBoard.switchCurrentSymbol();
+            CurrentPlayerText.updateCurrentPlayer();
         }
     
     }
 
-    function resetGame() {
+    function resetGame(player1, player2) {
         Index.clearGameDisplay();
-        const winner = PlayerUtils.getCurrentPlayerName();
-        const loser = PlayerUtils.getOtherPlayerName();
-        BotUtils.NormalBot.reset();
-        display(loser, winner, game);
+        display(player1, player2, gameMode);
     }
 
-    const PlayerUtils = (() => {
-        let currentPlayer;
+    function getPlayerNameWith(symbol) {
+        return Player[symbol];
+    }
 
-        function getCurrentPlayerName() {
-            return currentPlayer;
-        }
+    // const PlayerUtils = (() => {
+    //     let currentPlayer;
 
-        function getOtherPlayerName() {
-            return currentPlayer === Player["X"] ? Player["O"] : Player["X"];
-        }
+    //     function getCurrentPlayerName() {
+    //         return currentPlayer;
+    //     }
 
-        function createCurrentPlayerText() {
-            currentPlayer = Player["X"];
+    //     function getOtherPlayerName() {
+    //         return currentPlayer === Player["X"] ? Player["O"] : Player["X"];
+    //     }
 
+    //     function createCurrentPlayerText() {
+    //         currentPlayer = Player["X"];
+
+    //         const currentPlayerText = document.createElement("p");
+    //         currentPlayerText.id = "current-player";
+    //         currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
+
+    //         return currentPlayerText;
+    //     }
+
+    //     function switchCurrentPlayer() {
+    //         currentPlayer = getOtherPlayerName();
+    //         const currentPlayerText = document.getElementById("current-player");
+    //         currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
+    //     }
+
+    //     return { 
+    //         getCurrentPlayerName, 
+    //         getOtherPlayerName, 
+    //         createCurrentPlayerText, 
+    //         switchCurrentPlayer 
+    //     };
+
+    // })();
+
+    const CurrentPlayerText = (() => {
+        
+        function create() {
             const currentPlayerText = document.createElement("p");
             currentPlayerText.id = "current-player";
-            currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
+            currentPlayerText.textContent = `It's ${getPlayerNameWith("X")}'s turn`;
 
             return currentPlayerText;
         }
 
-        function switchCurrentPlayer() {
-            currentPlayer = getOtherPlayerName();
+        function updateCurrentPlayer() {
+            const board = GameBoard.getBoard();
+            const currentSymbol = GameUtils.getCurrentPlayerSymbol(board);
+            
             const currentPlayerText = document.getElementById("current-player");
-            currentPlayerText.textContent = `It's ${currentPlayer}'s turn`;
+            currentPlayerText.textContent = `It's ${getPlayerNameWith(currentSymbol)}'s turn`;
         }
 
-        return { 
-            getCurrentPlayerName, 
-            getOtherPlayerName, 
-            createCurrentPlayerText, 
-            switchCurrentPlayer 
-        };
+        return { create, updateCurrentPlayer };
 
     })();
 
@@ -94,22 +115,12 @@ export default (() => {
         const NUM_OF_ROWS = 3;
         const NUM_OF_COLUMNS = 3;
         const NUM_OF_SPACES = NUM_OF_ROWS * NUM_OF_COLUMNS;
-        let currentSymbol;
 
         function create() {
-            currentSymbol = "X";
             const gameBoard = document.createElement("div");
             gameBoard.classList.add("gameboard");
             generateSpaces(gameBoard);
             return gameBoard;
-        }
-
-        function getCurrentSymbol() {
-            return currentSymbol;
-        }
-
-        function switchCurrentSymbol() {
-            currentSymbol = currentSymbol === "X" ? "O" : "X";
         }
 
         function getBoard() {
@@ -148,7 +159,7 @@ export default (() => {
                 space.innerText = "";
                 space.style.cursor = "pointer";
 
-                switch(game) {
+                switch(gameMode) {
                     case "local":
                         space.onclick = LocalGame.behavior;
                         break;
@@ -189,8 +200,6 @@ export default (() => {
 
         return { 
             create, 
-            getCurrentSymbol, 
-            switchCurrentSymbol, 
             getBoard,
             getHTMLBoard,
             disableSpaces,
@@ -213,6 +222,11 @@ export default (() => {
         return { create };
     })();
 
-    // These are the only usable methods and properties outside this file
-    return { display, resetGame, PlayerUtils, GameBoard, Player }
+    return { 
+        display, 
+        resetGame, 
+        getPlayerNameWith, 
+        GameBoard, 
+        CurrentPlayerText 
+    }
 })();

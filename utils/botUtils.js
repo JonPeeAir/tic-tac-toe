@@ -3,14 +3,17 @@ import Game from "../views/game.js"
 
 export default (() => {
 
+    // This bot will only make random moves
     const EasyBot = (() => {
-        function makeMove() {
-            doRandomMove();
+
+        function makeMove() { 
+            doRandomMove(); 
         }
 
         return { makeMove };
     })();
 
+    // This bot will only make a random move at the start. The rest of its moves will be smart
     const NormalBot = (() => {
         let madeRandomMove = false;
 
@@ -30,62 +33,48 @@ export default (() => {
         return { makeMove, reset };
     })();
 
+    // This bot will only make smart moves
     const HardBot = (() => {
-        function makeMove() {
-            doSmartMove();
+
+        function makeMove() { 
+            doSmartMove(); 
         }
 
         return { makeMove };
     })();
 
+
+// ---------- ALL HELPER FUNCTIONS ---------- //
+
     function doRandomMove() {
-        const randomSpace = getRandomSpace();
-        randomSpace.innerText = Game.GameBoard.getCurrentSymbol();
+        // Get all empty spaces in the board
+        const allSpaces = Array.from(document.getElementsByClassName("space"));
+        const emptySpaces = allSpaces.filter(space => space.innerText === "");
+
+        // Choose a random space
+        let randomIndex = Math.floor(Math.random() * emptySpaces.length);
+        const randomSpace = emptySpaces[randomIndex];
+
+        // Play on that random space
+        const board = Game.GameBoard.getBoard();
+        randomSpace.innerText = GameUtils.getCurrentPlayerSymbol(board);
     }
 
     function doSmartMove() {
+        // Get a reference to all spaces on the board
         const board = Game.GameBoard.getBoard();
         const htmlBoard = Game.GameBoard.getHTMLBoard();
+
+        // Calculate the optimal action using minimax
         const action = getMinimaxAction(board)[0];
 
-        htmlBoard[action[0]][action[1]].innerText = Game.GameBoard.getCurrentSymbol();
-    }
-
-    function getPossibleMoves() {
-        const allSpaces = Array.from(document.getElementsByClassName("space"));
-        const playableSpaces = allSpaces.filter(space => space.innerText === "");
-        return playableSpaces;
-    }
-
-
-    function getRandomSpace() {
-        const playableSpaces = getPossibleMoves();
-        let randomIndex = Math.floor(Math.random() * playableSpaces.length);
-        return playableSpaces[randomIndex];
-    }
-
-    function getCurrentPlayerSymbol(board) {
-        let xCount = 0;
-        let oCount = 0;
-
-        for (let i = 0; i < board.length; i++) {
-            for (let j = 0; j < board[i].length; j++){
-                if (board[i][j] === "X") {
-                    xCount++;
-                } else if (board[i][j] === "O") {
-                    oCount++;
-                }
-            }
-        }
-
-        return xCount === oCount ? "X" : "O";
-    }
-
-    function getOtherPlayerSymbol(board) {
-        return getCurrentPlayerSymbol(board) === "X" ? "O" : "X";
+        // Play the action on the board
+        htmlBoard[action[0]][action[1]].innerText = GameUtils.getCurrentPlayerSymbol(board);
     }
 
     function getPossibleActions(board) {
+        // Returns an array of actions where an action is defined by a 2-element array [i, j]
+
         let possibleActions = [];
 
         for (let i = 0; i < board.length; i++) {
@@ -101,47 +90,23 @@ export default (() => {
     }
 
     function getResultBoard(board, action) {
-        // Returns the resulting board if the given action was applied
-        const possibleActions = getPossibleActions(board);
-        for (let i = 0; i < possibleActions.length; i++) {
-            let action_in_possibleActions = possibleActions[i][0] === action[0] && possibleActions[i][1] === action[1];
-            if (action_in_possibleActions) {
-                break;
-            }
+        // Returns the resulting board applying the given action
 
-            if (i === possibleActions.length - 1 && !action_in_possibleActions) {
-                throw "invalid action";
-            }
-        }
-
-        const currentSymbol = getCurrentPlayerSymbol(board);
-
-        // Get a deep copy of the board into resultBoard
+        // This does a deep copy of the board and puts it into resultBoard
         const resultBoard = JSON.parse(JSON.stringify(board));
 
+        const currentSymbol = GameUtils.getCurrentPlayerSymbol(board);
         resultBoard[action[0]][action[1]] = currentSymbol;
 
         return resultBoard;
     }
 
-    function getWinningSymbol(board) {
-        if (GameUtils.thereIsWinner(board)) {
-            return getOtherPlayerSymbol(board);
-        }
-        return null;
-    }
-
-    function boardIsTerminal(board) {
-        const there_is_a_winner = getWinningSymbol(board) != null;
-        const there_are_no_more_moves = !GameUtils.thereIsSpace(board);
-
-        return there_is_a_winner || there_are_no_more_moves ? true : false;
-    }
-
     function getBoardUtility(board) {
-        if (getWinningSymbol(board) === "X") {
+        // Returns the utility/score of a terminal board
+
+        if (GameUtils.getWinningSymbol(board) === "X") {
             return 1;
-        } else if (getWinningSymbol(board) === "O") {
+        } else if (GameUtils.getWinningSymbol(board) === "O") {
             return -1;
         } else { // It's a tie
             return 0;
@@ -149,12 +114,13 @@ export default (() => {
     }
 
     function getMinimaxAction(board, alpha=undefined, beta=undefined) {
+        // Returns an array with an action as its first element and its utility/score as its second element
 
-        if (boardIsTerminal(board)) {
+        if (GameUtils.boardIsTerminal(board)) {
             return null;
         }
 
-        let currentPlayer = getCurrentPlayerSymbol(board);
+        let currentPlayer = GameUtils.getCurrentPlayerSymbol(board);
 
         if (currentPlayer === "X") {
 
@@ -220,12 +186,12 @@ export default (() => {
 
     }
 
+// ---------- END OF HELPER FUNCTIONS ---------- //
+
     return {
         EasyBot,
         NormalBot,
         HardBot,
-        getPossibleMoves,
-        doRandomMove
     }
 
 })();

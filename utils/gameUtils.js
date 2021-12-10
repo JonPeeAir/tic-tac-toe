@@ -2,79 +2,90 @@ import Game from "../views/game.js";
 
 export default (() => {
 
-    let winner = null;
-
-    function getWinner() {
-        return winner;
-    }
-
-    function setWinner() {
-        winner = Game.PlayerUtils.getCurrentPlayerName();
-    }
-
-    function resetWinner() {
-        winner = null;
-    }
-
-    function gameEnded() {
-        const symbols = Game.GameBoard.getBoard(); 
-
-        if (thereIsWinner(symbols)) {
-            setWinner();
-        }
-
-        return thereIsWinner(symbols) || !thereIsSpace(symbols);
-    }
-
-    function thereIsWinner(symbols) {
-
-        function winnerByRow() {
-            for (let i = 0; i < symbols.length; i++) {
-                if (symbols[i][0] === symbols[i][1] && symbols[i][0] === symbols[i][2] && symbols[i][0] != "") {
-                    return true;
-                }
-            }
-            return false
-        }
-
-        function winnerByColumn() {
-            for (let i = 0; i < symbols.length; i++) {
-                if (symbols[0][i] === symbols[1][i] && symbols[0][i] === symbols[2][i] && symbols[0][i] != "") {
-                    return true;
-                }
-            }
-            return false
-        }
-
-        function winnerByDiagonal() {
-            const topLeftToRightWin = symbols[0][0] === symbols[1][1] && symbols[0][0] === symbols[2][2] && symbols[0][0] != "";
-            const topRightToLeftWin= symbols[0][2] === symbols[1][1] && symbols[0][2] === symbols[2][0] && symbols[0][2] != "";
-
-            return topLeftToRightWin || topRightToLeftWin;
-        }
-
-        return winnerByRow() || winnerByColumn() || winnerByDiagonal();
-    }
-
-    function thereIsSpace(symbols) {
-        for (let i = 0; i < symbols.length; i++) {
-            for (let j = 0; j < symbols[i].length; j++) {
-                if (symbols[i][j] === "") {
-                    return true;
-                }
+    function thereIsSpace(board) {
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+                if (board[i][j] === "") return true;
             }
         }
         return false;
     }
 
+    function getCurrentPlayerSymbol(board) {
+        let xCount = 0;
+        let oCount = 0;
 
-    // These are the only usable methods and properties outside this file
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++){
+                if (board[i][j] === "X") {
+                    xCount++;
+                } else if (board[i][j] === "O") {
+                    oCount++;
+                }
+            }
+        }
+
+        return xCount === oCount ? "X" : "O";
+    }
+    
+    function getOtherPlayerSymbol(board) {
+        return getCurrentPlayerSymbol(board) === "X" ? "O" : "X";
+    }
+
+    function getWinningSymbol(board) {
+
+        function checkRow(symbol) {
+            for (let i = 0; i < board.length; i++) {
+                if (board[i][0] === board[i][1] && board[i][1] === board[i][2] && board[i][2] === symbol) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function checkColumn(symbol) {
+            for (let i = 0; i < board.length; i++) {
+                if (board[0][i] === board[1][i] && board[1][i] === board[2][i] && board[2][i] === symbol) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function checkDiagonal(symbol) {
+            const topLeftToBottomRight = board[0][0] === board[1][1] && board[1][1] === board[2][2] && board[2][2] === symbol;
+            const topRightToBottomLeft= board[0][2] === board[1][1] && board[1][1] === board[2][0] && board[2][0] === symbol;
+
+            return topLeftToBottomRight || topRightToBottomLeft
+        }
+
+        if (checkRow("X") || checkColumn("X") || checkDiagonal("X")) {
+            return "X";
+        } else if (checkRow("O") || checkColumn("O") || checkDiagonal("O")) {
+            return "O";
+        } else {
+            return null;
+        }
+    }
+
+    function getLosingSymbol(board) {
+        return getWinningSymbol(board) === "X" ? "O" : "X";
+    }
+
+    function boardIsTerminal(board) {
+        const there_is_a_winner = getWinningSymbol(board) != null;
+        const there_are_no_more_moves = !thereIsSpace(board);
+
+        return there_is_a_winner || there_are_no_more_moves ? true : false;
+    }
+
     return { 
-        gameEnded,
-        getWinner, 
-        resetWinner,
-        thereIsWinner, 
-        thereIsSpace
+        thereIsSpace,
+        getCurrentPlayerSymbol,
+        getOtherPlayerSymbol,
+        getWinningSymbol,
+        getLosingSymbol,
+        boardIsTerminal
     }
 })();
 
