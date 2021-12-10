@@ -10,7 +10,6 @@ export default (() => {
 
         document.addEventListener("keydown", function startLocalGameWithEnterKey(event) {
             if(event.key === "Enter") {
-                console.log("Enter key was pressed");
                 NavButtons.NextButton.startLocalGame();
                 document.removeEventListener("keydown", startLocalGameWithEnterKey);
             }

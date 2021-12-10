@@ -15,10 +15,9 @@ export default (() => {
         }
     }
 
-    // These are the only usable methods and properties outside this file
     return { goBackToMainMenu, clearGameDisplay }
 })();
 
 MainMenu.display();
-GameResults.setup();
+// GameResults.setup();
 

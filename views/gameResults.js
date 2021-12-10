@@ -6,18 +6,15 @@ export default (() => {
 
     function display(winner) {
         const gameResults = document.querySelector(".game-results");
+        setupButtons();
         for (let child of gameResults.children) {
             child.classList.add("active");
         }
 
-        if (winner) {
-            showWinnerDialog(winner);
-        } else {
-            showTieDialog();
-        }
+        winner ? showWinnerDialog(winner) : showTieDialog();
     }
 
-    function setup() {
+    function setupButtons() {
         const mainMenuBtn = document.querySelector(".main-menu");
         mainMenuBtn.onclick = goBackToMainMenu;
 
@@ -55,5 +52,5 @@ export default (() => {
 
 
     // These are the only usable methods and properties outside this file
-    return { display, setup };
+    return { display };
 })();

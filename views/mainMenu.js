@@ -7,21 +7,21 @@ export default (() => {
     function display() {
         const gameDiv = document.querySelector(".game");
         gameDiv.innerText = "Choose a gamemode"
-        gameDiv.append(GameModes.create());
+        gameDiv.append(GameModeButtons.create());
     }
 
-    const GameModes = (() => {
+    const GameModeButtons = (() => {
 
         function create() {
             const gamemodeOptions = document.createElement("div");
             gamemodeOptions.classList.add("choices");
-            gamemodeOptions.append(LocalMode.create());
-            gamemodeOptions.append(AgainstBotMode.create());
+            gamemodeOptions.append(LocalModeButton.create());
+            gamemodeOptions.append(AgainstBotButton.create());
 
             return gamemodeOptions;
         }
 
-        const LocalMode = (() => {
+        const LocalModeButton = (() => {
             function create() {
                 const local = document.createElement("button");
                 local.innerText = "Local";
@@ -39,7 +39,7 @@ export default (() => {
             return { create };
         })();
 
-        const AgainstBotMode = (() => {
+        const AgainstBotButton = (() => {
             function create() {
                 const againstBot = document.createElement("button");
                 againstBot.innerText = "Against Bot"

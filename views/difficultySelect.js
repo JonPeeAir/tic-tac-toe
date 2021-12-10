@@ -5,12 +5,12 @@ export default (() => {
 
     function display() {
         const gameDiv = document.querySelector(".game");
-        gameDiv.append(createText("Choose a difficulty"));
+        gameDiv.append(text("Choose a difficulty"));
         gameDiv.append(DifficultyOptions.create());
         gameDiv.append(BackButton.create());
     }
 
-    function createText(textContent) {
+    function text(textContent) {
         const text = document.createElement("p");
         text.textContent = textContent;
 
@@ -22,13 +22,13 @@ export default (() => {
         function create() {
             const difficultyOptions = document.createElement("div");
             difficultyOptions.classList.add("difficulty-options");
-            difficultyOptions.append(EasyMode.create());
-            difficultyOptions.append(NormalMode.create());
-            difficultyOptions.append(AgainstJeff.create());
+            difficultyOptions.append(EasyModeButton.create());
+            difficultyOptions.append(NormalModeButton.create());
+            difficultyOptions.append(HardModeButton.create());
             return difficultyOptions;
         }
 
-        const EasyMode = (() => {
+        const EasyModeButton = (() => {
             
             function create() {
                 const easyMode = document.createElement("button");
@@ -46,7 +46,7 @@ export default (() => {
             return { create };
         })();
 
-        const NormalMode = (() => {
+        const NormalModeButton = (() => {
 
             function create() {
                 const normalMode = document.createElement("button");
@@ -64,7 +64,7 @@ export default (() => {
             return { create };
         })();
 
-        const AgainstJeff = (() => {
+        const HardModeButton = (() => {
 
             function create() {
                 const jeff = document.createElement("button");
@@ -76,7 +76,7 @@ export default (() => {
 
             function startHardBotGame() {
                 Index.clearGameDisplay();
-                Game.display("Player", "Jeff", "hard");
+                Game.display("Player", "Jeff Bezos?", "hard");
             }
 
             return { create };
